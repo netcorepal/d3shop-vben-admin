@@ -29,6 +29,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           icon: 'carbon:workspace',
           title: $t('page.dashboard.workspace'),
+          hideInMenu: true,
         },
       },
     ],

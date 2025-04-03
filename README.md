@@ -1,11 +1,11 @@
 [![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
 
-<h1>Vue Vben Admin</h1>
+<h1>d3shop-vben-admin</h1>
 </div>
 
 ## 简介
 
-Vue Vben Admin 是 Vue Vben Admin 的升级版本。作为一个免费开源的中后台模板，它采用了最新的 Vue 3、Vite、TypeScript 等主流技术开发，开箱即用，可用于中后台前端开发，也适合学习参考。
+d3shop-vben-admin 基于 Vben Admin 的前端vue版本。
 
 ## 特性
 
@@ -30,7 +30,7 @@ git clone https://github.com/netcorepal/d3shop-vben-admin.git
 - 安装依赖
 
 ```bash
-cd d3shop-vben-admin/playground
+cd d3shop-vben-admin
 
 corepack enable
 
@@ -40,7 +40,7 @@ pnpm install
 - 运行
 
 ```bash
-pnpm dev
+pnpm run dev:antd
 ```
 
 - 打包
