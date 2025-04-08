@@ -56,6 +56,7 @@ const schema: VbenFormSchema[] = [
       .max(30, $t('ui.formRules.maxLength', [$t('system.menu.menuName'), 30]))
       .refine(
         async (value: string) => {
+          if (!value) return true;
           return !(await isMenuNameExists(value, formData.value?.id));
         },
         (value) => ({
@@ -139,6 +140,7 @@ const schema: VbenFormSchema[] = [
       )
       .refine(
         async (value: string) => {
+          if (!value) return true;
           return !(await isMenuPathExists(value, formData.value?.id));
         },
         (value) => ({
@@ -171,6 +173,7 @@ const schema: VbenFormSchema[] = [
         $t('ui.formRules.startWith', [$t('system.menu.path'), '/']),
       )
       .refine(async (value: string) => {
+        if (!value) return true;
         return await isMenuPathExists(value, formData.value?.id);
       }, $t('system.menu.activePathMustExist'))
       .optional(),
