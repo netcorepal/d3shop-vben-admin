@@ -28,7 +28,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'Textarea',
-      fieldName: 'remark',
+      fieldName: 'description',
       label: $t('system.role.remark'),
     },
     {
@@ -63,7 +63,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'Input',
-      fieldName: 'remark',
+      fieldName: 'description',
       label: $t('system.role.remark'),
     },
     {
@@ -99,7 +99,7 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
       width: 100,
     },
     {
-      field: 'remark',
+      field: 'description',
       minWidth: 100,
       title: $t('system.role.remark'),
     },

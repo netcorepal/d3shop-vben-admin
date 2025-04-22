@@ -8,7 +8,7 @@ export namespace SystemRoleApi {
     id: string;
     name: string;
     permissions: string[];
-    remark?: string;
+    description?: string;
     status: 0 | 1;
   }
 }
@@ -18,7 +18,7 @@ export namespace SystemRoleApi {
  */
 async function getRoleList(params: Recordable<any>) {
   return requestClient.get<Array<SystemRoleApi.SystemRole>>(
-    '/system/role/list',
+    '/role/GetAllRoles',
     { params },
   );
 }
@@ -28,7 +28,7 @@ async function getRoleList(params: Recordable<any>) {
  * @param data 角色数据
  */
 async function createRole(data: Omit<SystemRoleApi.SystemRole, 'id'>) {
-  return requestClient.post('/system/role', data);
+  return requestClient.post('/role/CreateRole', data);
 }
 
 /**
@@ -41,7 +41,7 @@ async function updateRole(
   id: string,
   data: Omit<SystemRoleApi.SystemRole, 'id'>,
 ) {
-  return requestClient.put(`/system/role/${id}`, data);
+  return requestClient.put(`/role/UpdateRoleInfo/${id}`, data);
 }
 
 /**
@@ -49,7 +49,7 @@ async function updateRole(
  * @param id 角色 ID
  */
 async function deleteRole(id: string) {
-  return requestClient.delete(`/system/role/${id}`);
+  return requestClient.delete(`/role/DeleteRole/${id}`);
 }
 
 export { createRole, deleteRole, getRoleList, updateRole };
