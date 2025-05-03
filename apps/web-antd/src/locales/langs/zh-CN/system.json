@@ -1,4 +1,17 @@
 {
+  "user": {
+    "title": "用户管理",
+    "list": "用户列表",
+    "userName": "用户名",
+    "nickName": "昵称",
+    "email": "邮箱",
+    "phone": "手机号",
+    "status": "状态",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "name": "用户",
+    "password": "密码"
+  },
   "dept": {
     "list": "部门列表",
     "createTime": "创建时间",
