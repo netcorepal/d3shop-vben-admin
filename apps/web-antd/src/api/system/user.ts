@@ -29,6 +29,15 @@ export namespace SystemUserApi {
     /** 更新时间 */
     // updateTime?: string;
   }
+  /** 系统用户角色信息*/
+  export interface SystemUserRole {
+    /** 用户ID */
+    roleId?: number;
+    /** 用户名 */
+    roleName: string;
+    /** 密码 */
+    isAssigned?: boolean;
+  }
 }
 
 /**
@@ -50,11 +59,20 @@ async function getUserInfo(id: number) {
   });
 }
 
+async function getAdminUserRoles(id: number) {
+  return requestClient.get<Array<SystemUserApi.SystemUserRole>>(
+    '/AdminUser/GetAdminUserRoles',
+    {
+      params: { id },
+    },
+  );
+}
+
 /**
  * 创建用户
  */
 async function createUser(data: SystemUserApi.SystemUser) {
-  return requestClient.post('/api/user/add', data);
+  return requestClient.post('/AdminUser/CreateAdminUser', data);
 }
 
 /**
@@ -73,4 +91,11 @@ async function deleteUser(id: number) {
   });
 }
 
-export { createUser, deleteUser, getUserInfo, getUserList, updateUser };
+export {
+  createUser,
+  deleteUser,
+  getAdminUserRoles,
+  getUserInfo,
+  getUserList,
+  updateUser,
+};

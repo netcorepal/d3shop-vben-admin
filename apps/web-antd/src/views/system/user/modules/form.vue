@@ -62,12 +62,15 @@ const [Drawer, drawerApi] = useVbenDrawer({
       if (data) {
         formData.value = data;
         id.value = data.id;
-        formApi.setValues(data);
+        // 先加载角色列表，然后再设置表单值
+        loadRoles().then(() => {
+          formApi.setValues(data);
+        });
       } else {
         formData.value = { status: 1 } as SystemUserApi.SystemUser;
         id.value = undefined;
+        loadRoles();
       }
-      loadRoles();
     }
   },
 });
