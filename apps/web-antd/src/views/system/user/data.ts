@@ -10,37 +10,12 @@ const statusOptions = [
   { label: $t('common.disabled'), value: 0 },
 ];
 
-// 搜索表单 schema
-export function useGridFormSchema(): VbenFormSchema[] {
-  return [
-    {
-      component: 'Input',
-      fieldName: 'userName',
-      label: $t('system.user.userName'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'nickName',
-      label: $t('system.user.nickName'),
-    },
-    {
-      component: 'Select',
-      fieldName: 'status',
-      label: $t('system.user.status'),
-      componentProps: {
-        allowClear: true,
-        options: statusOptions,
-      },
-    },
-  ];
-}
-
 // 编辑表单 schema
 export function useFormSchema(): VbenFormSchema[] {
   return [
     {
       component: 'Input',
-      fieldName: 'userName',
+      fieldName: 'name',
       label: $t('system.user.userName'),
       rules: 'required',
     },
@@ -49,11 +24,11 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'password',
       label: $t('system.user.password'),
       rules: 'required',
-      ifShow: ({ values }: { values: Recordable }) => !values.id,
+      // ifShow: ({ values }: { values: Recordable }) => !values.id,
     },
     {
       component: 'Input',
-      fieldName: 'nickName',
+      fieldName: 'realName',
       label: $t('system.user.nickName'),
       rules: 'required',
     },
@@ -82,16 +57,42 @@ export function useFormSchema(): VbenFormSchema[] {
   ];
 }
 
+// 搜索表单 schema
+export function useGridFormSchema(): VbenFormSchema[] {
+  return [
+    {
+      component: 'Input',
+      fieldName: 'name',
+      label: $t('system.user.userName'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'realName',
+      label: $t('system.user.nickName'),
+    },
+    {
+      component: 'Select',
+      fieldName: 'status',
+      label: $t('system.user.status'),
+      componentProps: {
+        allowClear: true,
+        options: statusOptions,
+      },
+    },
+  ];
+}
+
 // 表格 columns
 export function useColumns<T = SystemUserApi.SystemUser>(
   onActionClick: OnActionClickFn<T>,
 ): VxeTableGridOptions['columns'] {
   return [
     {
-      field: 'userName',
-      title: $t('system.user.userName'),
-      width: 120,
+      field: 'name',
+      title: $t('system.user.name'),
+      width: 200,
     },
+
     {
       field: 'nickName',
       title: $t('system.user.nickName'),
@@ -115,24 +116,25 @@ export function useColumns<T = SystemUserApi.SystemUser>(
       title: $t('system.user.status'),
       width: 100,
     },
+
     {
-      field: 'createTime',
-      title: $t('system.user.createTime'),
-      width: 180,
+      field: 'createdAt',
+      title: $t('system.role.createTime'),
+      minWidth: 100,
     },
     {
       align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'userName',
-          nameTitle: $t('system.user.userName'),
+          nameField: 'name',
+          nameTitle: $t('system.role.name'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
       },
       field: 'operation',
       fixed: 'right',
-      title: $t('system.user.operation'),
+      title: $t('system.role.operation'),
       width: 130,
     },
   ];

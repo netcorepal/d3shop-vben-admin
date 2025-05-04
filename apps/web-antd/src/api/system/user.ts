@@ -11,11 +11,11 @@ export namespace SystemUserApi {
     /** 用户ID */
     id?: number;
     /** 用户名 */
-    username: string;
+    name: string;
     /** 密码 */
     password?: string;
-    /** 昵称 */
-    nickname: string;
+    /** 真实姓名 */
+    realName: string;
     /** 邮箱 */
     email: string;
     /** 电话 */
@@ -23,31 +23,9 @@ export namespace SystemUserApi {
     /** 状态 */
     status: (typeof UserStatus)[number];
     /** 创建时间 */
-    createTime?: string;
+    createdAt?: string;
     /** 更新时间 */
-    updateTime?: string;
-  }
-
-  /** 用户列表查询参数 */
-  export interface UserListParams {
-    /** 页码 */
-    page: number;
-    /** 每页条数 */
-    pageSize: number;
-    /** 用户名 */
-    username?: string;
-    /** 昵称 */
-    nickname?: string;
-    /** 状态 */
-    status?: (typeof UserStatus)[number];
-  }
-
-  /** 用户列表查询结果 */
-  export interface UserListResult {
-    /** 用户列表 */
-    items: SystemUser[];
-    /** 总数 */
-    total: number;
+    // updateTime?: string;
   }
 }
 
@@ -55,7 +33,7 @@ export namespace SystemUserApi {
  * 获取用户列表
  */
 async function getUserList(params: Recordable<any>) {
-  return requestClient.get<Array<SystemUserApi.UserListResult>>(
+  return requestClient.get<Array<SystemUserApi.SystemUser>>(
     '/AdminUser/GetAllAdminUsers',
     { params },
   );
