@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { VbenFormSchema } from '#/adapter/form';
 import type { SystemUserApi } from '#/api/system/user';
 
 import { computed, ref } from 'vue';
@@ -8,63 +7,37 @@ import { useVbenDrawer } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
 import { useVbenForm } from '#/adapter/form';
+import { getRoleList } from '#/api/system/role';
 import { createUser, updateUser } from '#/api/system/user';
+
+import { useFormSchema } from '../data';
 
 const emits = defineEmits(['success']);
 
 const formData = ref<SystemUserApi.SystemUser>();
 const id = ref();
+const roles = ref<{ label: string; value: string }[]>([]);
 
-const schema: VbenFormSchema[] = [
-  {
-    component: 'Input',
-    fieldName: 'userName',
-    label: $t('system.user.userName'),
-    rules: 'required',
-  },
-  {
-    component: 'InputPassword',
-    fieldName: 'password',
-    label: $t('system.user.password'),
-    rules: 'required',
-    dependencies: {
-      show: (values) => !values.id,
-      triggerFields: ['id'],
+// Load roles when component is mounted
+const loadRoles = async () => {
+  const res = await getRoleList({ pageIndex: 1, pageSize: 1000 });
+  roles.value = res.items.map((role: { id: string; name: string }) => ({
+    label: role.name,
+    value: role.id,
+  }));
+  // 更新表单中 roleIds 字段的 options
+  formApi.updateSchema([
+    {
+      fieldName: 'roleIds',
+      componentProps: {
+        options: roles.value,
+      },
     },
-  },
-  {
-    component: 'Input',
-    fieldName: 'nickName',
-    label: $t('system.user.nickName'),
-    rules: 'required',
-  },
-  {
-    component: 'Input',
-    fieldName: 'email',
-    label: $t('system.user.email'),
-    rules: 'required',
-  },
-  {
-    component: 'Input',
-    fieldName: 'phone',
-    label: $t('system.user.phone'),
-  },
-  {
-    component: 'RadioGroup',
-    fieldName: 'status',
-    label: $t('system.user.status'),
-    defaultValue: 1,
-    componentProps: {
-      options: [
-        { label: '启用', value: 1 },
-        { label: '禁用', value: 0 },
-      ],
-    },
-  },
-];
+  ]);
+};
 
 const [Form, formApi] = useVbenForm({
-  schema,
+  schema: useFormSchema(),
   showDefaultActions: false,
 });
 
@@ -94,6 +67,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
         formData.value = { status: 1 } as SystemUserApi.SystemUser;
         id.value = undefined;
       }
+      loadRoles();
     }
   },
 });
@@ -105,7 +79,7 @@ const getDrawerTitle = computed(() => {
 });
 
 defineExpose({
-  submit: () => drawerApi.confirm(),
+  submit: () => drawerApi.onConfirm(),
   setFieldsValue: formApi.setValues,
 });
 </script>

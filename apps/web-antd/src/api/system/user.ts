@@ -24,6 +24,8 @@ export namespace SystemUserApi {
     status: (typeof UserStatus)[number];
     /** 创建时间 */
     createdAt?: string;
+    /** 角色ID列表 */
+    roleIds?: string[];
     /** 更新时间 */
     // updateTime?: string;
   }

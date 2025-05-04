@@ -1,8 +1,8 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemUserApi } from '#/api';
+import type { SystemUserApi } from '#/api/system/user';
 
-import { $t } from '#/locales';
+import { $t } from '@vben/locales';
 
 // 状态选项统一
 const statusOptions = [
@@ -24,7 +24,10 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'password',
       label: $t('system.user.password'),
       rules: 'required',
-      // ifShow: ({ values }: { values: Recordable }) => !values.id,
+      dependencies: {
+        show: (values) => !values.id,
+        triggerFields: ['id'],
+      },
     },
     {
       component: 'Input',
@@ -44,14 +47,32 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.user.phone'),
     },
     {
+      component: 'ApiSelect',
+      fieldName: 'roleIds',
+      label: $t('system.role.name'),
+      componentProps: {
+        // api: getRoleList,
+        resultField: 'items',
+        labelField: 'name',
+        class: 'w-full',
+        valueField: 'id',
+        mode: 'multiple',
+        showSearch: true,
+        optionFilterProp: 'label',
+        placeholder: '请选择角色',
+      },
+      rules: 'required',
+    },
+    {
       component: 'RadioGroup',
       fieldName: 'status',
       label: $t('system.user.status'),
       defaultValue: 1,
       componentProps: {
-        options: statusOptions,
-        optionType: 'button',
-        buttonStyle: 'solid',
+        options: [
+          { label: '启用', value: 1 },
+          { label: '禁用', value: 0 },
+        ],
       },
     },
   ];
@@ -92,9 +113,8 @@ export function useColumns<T = SystemUserApi.SystemUser>(
       title: $t('system.user.name'),
       width: 200,
     },
-
     {
-      field: 'nickName',
+      field: 'realName',
       title: $t('system.user.nickName'),
       width: 120,
     },
@@ -116,7 +136,17 @@ export function useColumns<T = SystemUserApi.SystemUser>(
       title: $t('system.user.status'),
       width: 100,
     },
-
+    {
+      field: 'roleIds',
+      title: $t('system.role.name'),
+      width: 200,
+      cellRender: {
+        name: 'CellTag',
+        props: {
+          multiple: true,
+        },
+      },
+    },
     {
       field: 'createdAt',
       title: $t('system.role.createTime'),
