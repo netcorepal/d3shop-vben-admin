@@ -466,8 +466,8 @@ catalogs:
       specifier: ^1.0.7
       version: 1.0.7
     vite-plugin-pwa:
-      specifier: ^0.21.2
-      version: 0.21.2
+      specifier: ^1.0.0
+      version: 1.0.0
     vite-plugin-vue-devtools:
       specifier: ^7.7.2
       version: 7.7.2
@@ -879,7 +879,7 @@ importers:
         version: link:../internal/vite-config
       '@vite-pwa/vitepress':
         specifier: 'catalog:'
-        version: 0.5.4(vite-plugin-pwa@0.21.2(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0))
+        version: 0.5.4(vite-plugin-pwa@1.0.0(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0))
       vitepress:
         specifier: 'catalog:'
         version: 1.6.3(@algolia/client-search@5.20.4)(@types/node@22.13.17)(async-validator@4.2.5)(axios@1.8.4)(change-case@5.4.4)(less@4.2.2)(nprogress@0.2.0)(postcss@8.5.3)(qrcode@1.5.4)(sass@1.86.1)(search-insights@2.17.3)(sortablejs@1.15.6)(terser@5.39.0)(typescript@5.8.2)
@@ -1155,7 +1155,7 @@ importers:
         version: 2.0.3
       vite-plugin-pwa:
         specifier: 'catalog:'
-        version: 0.21.2(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(less@4.2.2)(sass@1.86.1)(terser@5.39.0)(yaml@2.7.0))(workbox-build@7.3.0)(workbox-window@7.3.0)
+        version: 1.0.0(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(less@4.2.2)(sass@1.86.1)(terser@5.39.0)(yaml@2.7.0))(workbox-build@7.3.0)(workbox-window@7.3.0)
       vite-plugin-vue-devtools:
         specifier: 'catalog:'
         version: 7.7.2(rollup@4.39.0)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(less@4.2.2)(sass@1.86.1)(terser@5.39.0)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))
@@ -10079,11 +10079,11 @@ packages:
   vite-plugin-lazy-import@1.0.7:
     resolution: {integrity: sha512-mE6oAObOb4wqso4AoUGi9cLjdR+4vay1RCaKJvziBuFPlziZl7J0aw2hsqRTokLVRx3bli0a0VyjMOwsNDv58A==}
 
-  vite-plugin-pwa@0.21.2:
-    resolution: {integrity: sha512-vFhH6Waw8itNu37hWUJxL50q+CBbNcMVzsKaYHQVrfxTt3ihk3PeLO22SbiP1UNWzcEPaTQv+YVxe4G0KOjAkg==}
+  vite-plugin-pwa@1.0.0:
+    resolution: {integrity: sha512-X77jo0AOd5OcxmWj3WnVti8n7Kw2tBgV1c8MCXFclrSlDV23ePzv2eTDIALXI2Qo6nJ5pZJeZAuX0AawvRfoeA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
-      '@vite-pwa/assets-generator': ^0.2.6
+      '@vite-pwa/assets-generator': ^1.0.0
       vite: ^3.1.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
       workbox-build: ^7.3.0
       workbox-window: ^7.3.0
@@ -13635,9 +13635,9 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vite-pwa/vitepress@0.5.4(vite-plugin-pwa@0.21.2(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0))':
+  '@vite-pwa/vitepress@0.5.4(vite-plugin-pwa@1.0.0(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0))':
     dependencies:
-      vite-plugin-pwa: 0.21.2(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0)
+      vite-plugin-pwa: 1.0.0(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0)
 
   '@vitejs/plugin-vue-jsx@4.1.2(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(less@4.2.2)(sass@1.86.1)(terser@5.39.0)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))':
     dependencies:
@@ -19769,7 +19769,7 @@ snapshots:
       rollup: 4.39.0
       xe-utils: 3.7.4
 
-  vite-plugin-pwa@0.21.2(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0):
+  vite-plugin-pwa@1.0.0(vite@5.4.14(@types/node@22.13.17)(less@4.2.2)(sass@1.86.1)(terser@5.39.0))(workbox-build@7.3.0)(workbox-window@7.3.0):
     dependencies:
       debug: 4.4.0
       pretty-bytes: 6.1.1
@@ -19780,7 +19780,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-pwa@0.21.2(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(less@4.2.2)(sass@1.86.1)(terser@5.39.0)(yaml@2.7.0))(workbox-build@7.3.0)(workbox-window@7.3.0):
+  vite-plugin-pwa@1.0.0(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(less@4.2.2)(sass@1.86.1)(terser@5.39.0)(yaml@2.7.0))(workbox-build@7.3.0)(workbox-window@7.3.0):
     dependencies:
       debug: 4.4.0
       pretty-bytes: 6.1.1
