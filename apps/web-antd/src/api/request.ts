@@ -30,11 +30,29 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   /**
    * 重新认证逻辑
    */
-  async function doReAuthenticate() {
+  async function doReAuthenticate(): Promise<void> {
     console.warn('Access token or refresh token is invalid or expired. ');
     const accessStore = useAccessStore();
     const authStore = useAuthStore();
+
+    // 清除过期的 token
     accessStore.setAccessToken(null);
+
+    // 如果启用了刷新 token 功能，尝试刷新 token
+    if (preferences.app.enableRefreshToken) {
+      try {
+        const resp = await refreshTokenApi();
+        const newToken = resp.data;
+        if (newToken) {
+          accessStore.setAccessToken(newToken);
+          return;
+        }
+      } catch (error) {
+        console.error('Failed to refresh token:', error);
+      }
+    }
+
+    // 如果刷新失败或未启用刷新功能，则处理登录过期
     if (
       preferences.app.loginExpiredMode === 'modal' &&
       accessStore.isAccessChecked
@@ -48,12 +66,20 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   /**
    * 刷新token逻辑
    */
-  async function doRefreshToken() {
+  async function doRefreshToken(): Promise<string> {
     const accessStore = useAccessStore();
-    const resp = await refreshTokenApi();
-    const newToken = resp.data;
-    accessStore.setAccessToken(newToken);
-    return newToken;
+    try {
+      const resp = await refreshTokenApi();
+      const newToken = resp.data;
+      if (newToken) {
+        accessStore.setAccessToken(newToken);
+        return newToken;
+      }
+    } catch (error) {
+      console.error('Failed to refresh token:', error);
+      await doReAuthenticate();
+    }
+    throw new Error('Failed to refresh token');
   }
 
   function formatToken(token: null | string) {
@@ -64,7 +90,6 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   client.addRequestInterceptor({
     fulfilled: async (config) => {
       const accessStore = useAccessStore();
-
       config.headers.Authorization = formatToken(accessStore.accessToken);
       config.headers['Accept-Language'] = preferences.app.locale;
       return config;
@@ -91,14 +116,11 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     }),
   );
 
-  // 通用的错误处理,如果没有进入上面的错误处理逻辑，就会进入这里
+  // 通用的错误处理
   client.addResponseInterceptor(
     errorMessageResponseInterceptor((msg: string, error) => {
-      // 这里可以根据业务进行定制,你可以拿到 error 内的信息进行定制化处理，根据不同的 code 做不同的提示，而不是直接使用 message.error 提示 msg
-      // 当前mock接口返回的错误字段是 error 或者 message
       const responseData = error?.response?.data ?? {};
       const errorMessage = responseData?.error ?? responseData?.message ?? '';
-      // 如果没有错误信息，则会根据状态码进行提示
       message.error(errorMessage || msg);
     }),
   );

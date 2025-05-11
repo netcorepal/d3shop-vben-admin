@@ -4,7 +4,7 @@ import { registerAccessDirective } from '@vben/access';
 import { initTippy, registerLoadingDirective } from '@vben/common-ui';
 import { MotionPlugin } from '@vben/plugins/motion';
 import { preferences } from '@vben/preferences';
-import { initStores } from '@vben/stores';
+import { initStores, useAccessStore } from '@vben/stores';
 import '@vben/styles';
 import '@vben/styles/antd';
 
@@ -40,8 +40,12 @@ async function bootstrap(namespace: string) {
   // 国际化 i18n 配置
   await setupI18n(app);
 
-  // 配置 pinia-tore
+  // 配置 pinia-store
   await initStores(app, { namespace });
+
+  // 清除过期的 access token
+  const accessStore = useAccessStore();
+  accessStore.setAccessToken(null);
 
   // 安装权限指令
   registerAccessDirective(app);
