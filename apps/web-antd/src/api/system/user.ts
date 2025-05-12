@@ -35,7 +35,7 @@ export namespace SystemUserApi {
     roleId?: number;
     /** 用户名 */
     roleName: string;
-    /** 密码 */
+    /** 是否已分配 */
     isAssigned?: boolean;
   }
 }
@@ -61,10 +61,7 @@ async function getUserInfo(id: number) {
 
 async function getAdminUserRoles(id: number) {
   return requestClient.get<Array<SystemUserApi.SystemUserRole>>(
-    '/AdminUser/GetAdminUserRoles',
-    {
-      params: { id },
-    },
+    `/AdminUser/GetAdminUserRoles/${id}`,
   );
 }
 
@@ -79,16 +76,14 @@ async function createUser(data: SystemUserApi.SystemUser) {
  * 更新用户
  */
 async function updateUser(data: SystemUserApi.SystemUser) {
-  return requestClient.put('/api/user/update', data);
+  return requestClient.put('/AdminUser/UpdateAdminUser', data);
 }
 
 /**
  * 删除用户
  */
 async function deleteUser(id: number) {
-  return requestClient.delete('/api/user/delete', {
-    params: { id },
-  });
+  return requestClient.delete(`/AdminUser/DeleteAdminUser/${id}`);
 }
 
 export {

@@ -137,17 +137,17 @@ export function useColumns<T = SystemUserApi.SystemUser>(
       title: $t('system.user.status'),
       width: 100,
     },
-    {
-      field: 'roleIds',
-      title: $t('system.role.name'),
-      width: 200,
-      cellRender: {
-        name: 'CellTag',
-        props: {
-          multiple: true,
-        },
-      },
-    },
+    // {
+    //   field: 'roleIds',
+    //   title: $t('system.role.name'),
+    //   width: 200,
+    //   cellRender: {
+    //     name: 'CellTag',
+    //     props: {
+    //       multiple: true,
+    //     },
+    //   },
+    // },
     {
       field: 'createdAt',
       title: $t('system.role.createTime'),

@@ -8,7 +8,7 @@ import { $t } from '@vben/locales';
 
 import { useVbenForm } from '#/adapter/form';
 import { getRoleList } from '#/api/system/role';
-import { createUser, updateUser } from '#/api/system/user';
+import { createUser, getAdminUserRoles, updateUser } from '#/api/system/user';
 
 import { useFormSchema } from '../data';
 
@@ -21,7 +21,7 @@ const roles = ref<{ label: string; value: string }[]>([]);
 // Load roles when component is mounted
 const loadRoles = async () => {
   const res = await getRoleList({ pageIndex: 1, pageSize: 1000 });
-  roles.value = res.items.map((role: { id: string; name: string }) => ({
+  roles.value = res.items.map((role) => ({
     label: role.name,
     value: role.id,
   }));
@@ -63,9 +63,16 @@ const [Drawer, drawerApi] = useVbenDrawer({
         formData.value = data;
         id.value = data.id;
         // 先加载角色列表，然后再设置表单值
-        loadRoles().then(() => {
-          formApi.setValues(data);
-        });
+        (async () => {
+          await loadRoles();
+          if (data.id) {
+            const userRoles = await getAdminUserRoles(data.id);
+            data.roleIds = userRoles
+              .filter((role) => role.isAssigned)
+              .map((role) => role.roleId?.toString() || '');
+            formApi.setValues(data);
+          }
+        })();
       } else {
         formData.value = { status: 1 } as SystemUserApi.SystemUser;
         id.value = undefined;
